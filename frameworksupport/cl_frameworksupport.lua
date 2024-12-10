@@ -32,16 +32,19 @@
 						PlayerData = ESX.GetPlayerData()
 					end
 				end)
-
-				-- Listen for when new players load into the game
-				RegisterNetEvent('esx:playerLoaded')
-				AddEventHandler('esx:playerLoaded', function(xPlayer)
-					if pluginConfig.usingQBCore then
-						PlayerData = QBCore.Functions.GetPlayerData()
-					else
-						PlayerData = xPlayer
-					end
-				end)
+			if pluginConfig.usingQBCore then
+   				 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
+ 				   AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+   				     PlayerData = QBCore.Functions.GetPlayerData()
+			    end)        
+			else
+  				  -- Listen for when new players load into the game
+   				 RegisterNetEvent('esx:playerLoaded')
+  				  AddEventHandler('esx:playerLoaded', function(xPlayer)
+    				    PlayerData = xPlayer
+  				  end)
+			end
+		
 				-- Listen for when jobs are changed in esx_jobs
 				if pluginConfig.usingQBCore then
 					RegisterNetEvent('QBCore:Client:OnJobUpdate')
